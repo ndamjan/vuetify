@@ -40,7 +40,7 @@ export default {
     allDescendantLeafs () {
       let leafs = []
       let searchTree = items => {
-        if (items[this.childrenField] !== undefined && items[this.childrenField].length > 0) {
+        if (!!items[this.childrenField] && items[this.childrenField].length > 0) {
           items[this.childrenField].forEach(child => searchTree(child))
         } else {
           leafs.push(items)
@@ -50,7 +50,8 @@ export default {
       return leafs
     },
     allDescendantLeafsSelected () {
-      return this.hasChildren && this.hasSelection && this.allDescendantLeafs.every(leaf => this.value.some(sel => sel === leaf))
+      return this.hasChildren && this.hasSelection &&
+        this.allDescendantLeafs.every(leaf => this.value.some(sel => sel === leaf))
     },
     caption () {
       return this.items[this.captionField]
@@ -59,16 +60,18 @@ export default {
       return this.hasChildren && this.items[this.childrenField]
     },
     hasChildren () {
-      return this.items[this.childrenField] !== undefined && this.items[this.childrenField].length > 0
+      return !!this.items[this.childrenField] && this.items[this.childrenField].length > 0
     },
     hasSelection () {
-      return this.value !== undefined && this.value.length > 0
+      return !!this.value && this.value.length > 0
     },
     indeterminate () {
-      return this.hasSelection && this.hasChildren && this.someDescendantLeafsSelected
+      return this.hasSelection && this.hasChildren &&
+        this.someDescendantLeafsSelected && !this.allDescendantLeafsSelected
     },
     someDescendantLeafsSelected () {
-      return this.hasSelection && this.allDescendantLeafs.some(leaf => this.value.some(sel => sel === leaf))
+      return this.hasSelection &&
+        this.allDescendantLeafs.some(leaf => this.value.some(sel => sel === leaf))
     }
   },
 
