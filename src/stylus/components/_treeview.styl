@@ -1,6 +1,41 @@
-@import '../bootstrap'
 @import '../theme'
 
-.input-group.input-group--selection-controls label.treeview-label
-  position: relative
-  left: 8px
+treeview($material)
+
+  .input-group.input-group--selection-controls
+    label.treeview-label
+      position: relative
+      left: 8px
+      max-width: calc(100% - 32px)
+
+  .input-group.input-group--selection-controls
+    label
+      max-width: 100%
+
+  button i.icon.expanded
+    transform: rotate(90deg)
+
+  .root
+    align-items: center
+
+    .treeview-toolbar
+      visibility: hidden
+
+    .treeview-toolbar
+      button.btn
+        min-width: 32px
+
+      button.btn, .btn__content, .btn__content::before, i.icon
+        transition: none
+
+    &:hover,&.selected
+      background: $material.table.hover
+
+      .treeview-toolbar
+        visibility: visible
+
+
+  .treeview-content
+    transition: height $primary-transition
+
+theme(treeview, "treeview")
